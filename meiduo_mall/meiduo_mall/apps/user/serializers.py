@@ -2,8 +2,11 @@ import re
 
 from rest_framework import serializers
 
-from user.models import UserModel
+# from user.models import UserModel
 from django_redis import get_redis_connection
+
+from meiduo_mall.meiduo_mall.apps.user.models import UserModel
+
 
 class UserSerializers(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True,allow_null=False,allow_blank=False)

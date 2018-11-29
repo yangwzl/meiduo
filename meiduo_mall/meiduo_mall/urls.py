@@ -21,5 +21,8 @@ from verifications import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url('^',include(urls))
+    url('^',include('verification.urls')),
+    url('^',include('user.urls')),
+    # 第三方登录
+    url('', include('social_django.urls'))
 ]

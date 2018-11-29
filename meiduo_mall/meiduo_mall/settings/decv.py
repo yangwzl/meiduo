@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',  # 跨域 app
 
-
+    'social_django',
 
 
 ]
@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'meiduo_mall.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'yuekao_test',
+        'NAME':'liaanci',
         'USER':'root',
         'PASSWORD':'123456',
         'HOST':'127.0.0.1',
@@ -164,6 +164,12 @@ CACHES = {
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "session"
 
+SOCIAL_AUTH_WEIBO_KEY = '2659514787'
+SOCIAL_AUTH_WEIBO_SECRET = 'be53d946ec602d901cfa2071d3c0c42a'
+
+# 登录成功后跳转页面
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/index.html'
+
 # 登录的后端认证
 REST_FRAMEWORK = {
     # 异常处理
@@ -171,9 +177,11 @@ REST_FRAMEWORK = {
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+
+        'social_django.context_processors.backends',
+        'social_django.context_processors.login_redirect' ,
     ),
 }
-from rest_framework.settings import
 # JWT_AUTH重写token
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),  # JWT_EXPIRATION_DELTA 指明token的有效期
@@ -183,4 +191,9 @@ JWT_AUTH = {
 # 配置django的认证后端
 AUTHENTICATION_BACKENDS = [
     'users.utils.UsernameMobileAuthBackend',
+
+    'social_core.backends.weibo.WeiboOAuth2',  # 微博
+    'social_core.backends.qq.QQOAuth2',  # qq
+    'social_core.backends.weixin.WeixinOAuth2',  # 微信
+    'django.contrib.auth.backends.ModelBackend'  # 指定django的modelbackend 类
 ]
